@@ -63,7 +63,7 @@ RUN echo y | sudo /home/docker/v8/build/install-build-deps.sh
 WORKDIR /home/docker/v8
 ARG CACHEBUST=1
 # checkout required V8 Tags
-#RUN git checkout 13.7.118
+RUN git checkout 13.7.118
 RUN gclient sync
 #ARG CACHEBUST=1
 
@@ -78,12 +78,12 @@ RUN cat out.gn/arm64.release/args.gn
 RUN sudo chmod 777 out.gn/arm64.release/args.gn
 RUN touch out.gn/arm64.release/args.gn
 RUN ninja -C out.gn/arm64.release -t clean
-RUN ninja -C out.gn/arm64.release
+RUN ninja -C out.gn/arm64.release v8_monolith
 # Prepare files for archiving
 RUN rm -rf target/arm64-v8a
 RUN mkdir -p target/arm64-v8a target/symbols/arm64-v8a
-RUN cp -rf out.gn/arm64.release/*.so ./target/arm64-v8a
-RUN cp -rf out.gn/arm64.release/lib.unstripped/*.so ./target/symbols/arm64-v8a
+RUN cp -rf out.gn/arm64.release/obj/*.a ./target/arm64-v8a
+#RUN cp -rf out.gn/arm64.release/lib.unstripped/*.so ./target/symbols/arm64-v8a
 
 # ARM
 # RUN python ./tools/dev/v8gen.py arm.release -vv
@@ -112,12 +112,13 @@ RUN sudo chmod 777 out.gn/x64.release/args.gn
 RUN touch out.gn/x64.release/args.gn
 # Build the V8 liblary
 RUN ninja -C out.gn/x64.release -t clean 
-RUN ninja -C out.gn/x64.release
+RUN ninja -C out.gn/x64.release v8_monolith
 # Prepare files for archiving
 RUN rm -rf target/x86_64
 RUN mkdir -p target/x86_64 target/symbols/x86_64
-RUN cp -rf out.gn/x64.release/*.so ./target/x86_64
-RUN cp -rf out.gn/x64.release/lib.unstripped/*.so ./target/symbols/x86_64
+# RUN cp -rf out.gn/x64.release/*.so ./target/x86_64
+# RUN cp -rf out.gn/x64.release/lib.unstripped/*.so ./target/symbols/x86_64
+RUN cp -rf out.gn/x64.release/obj/*.a ./target/x86_64
 
 # X86
 # RUN python ./tools/dev/v8gen.py ia32.release -vv
@@ -147,10 +148,10 @@ RUN find target -name "libv8_for_testing.cr.so" -delete
 RUN find target/symbols -name "libc++_shared.so" -delete
 
 # some V8 versions copy stl to release folder, some not. We need exact version of stl V8 built with to be on the safe side.
-RUN cp ./third_party/android_ndk/sources/cxx-stl/llvm-libc++/libs/arm64-v8a/libc++_shared.so ./target/arm64-v8a/
-RUN cp ./third_party/android_ndk/sources/cxx-stl/llvm-libc++/libs/armeabi-v7a/libc++_shared.so ./target/armeabi-v7a
-RUN cp ./third_party/android_ndk/sources/cxx-stl/llvm-libc++/libs/x86/libc++_shared.so ./target/x86/
-RUN cp ./third_party/android_ndk/sources/cxx-stl/llvm-libc++/libs/x86_64/libc++_shared.so ./target/x86_64/
+# RUN cp ./third_party/android_ndk/sources/cxx-stl/llvm-libc++/libs/arm64-v8a/libc++_shared.so ./target/arm64-v8a/
+# RUN cp ./third_party/android_ndk/sources/cxx-stl/llvm-libc++/libs/armeabi-v7a/libc++_shared.so ./target/armeabi-v7a
+# RUN cp ./third_party/android_ndk/sources/cxx-stl/llvm-libc++/libs/x86/libc++_shared.so ./target/x86/
+# RUN cp ./third_party/android_ndk/sources/cxx-stl/llvm-libc++/libs/x86_64/libc++_shared.so ./target/x86_64/
 
 WORKDIR /home/docker/v8/target/
 RUN zip -r ../v8.zip ./*
