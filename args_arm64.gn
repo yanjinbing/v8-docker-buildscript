@@ -1,13 +1,13 @@
 target_os = "android"
 target_cpu = "arm64"
-is_debug = false
-v8_enable_i18n_support= false
 v8_target_cpu = "arm64"
-is_component_build = false
-use_custom_libcxx = false
-v8_monolithic = true
-v8_use_external_startup_data = false
+v8_enable_i18n_support= false   # 禁用国际化支持，移除对 ICU 库的依赖，减小体积，但会导致 Intl 对象不可用
+is_component_build = false      # 构建为单一静态库
+use_custom_libcxx = false       # 使用系统提供的 libc++ 库，而非 V8 自带的版本
+v8_monolithic = true            # 生成单一文件
+v8_use_external_startup_data = false  
 symbol_level = 0
-v8_android_log_stdout = true
-v8_enable_tests = false
-
+is_debug = false
+v8_android_log_stdout = true    # 将V8 的标准输出重定向到 Android 的日志系统（logcat）
+v8_enable_tests = false         # 不构建 V8 的测试套件，减少构建时间和产物体积
+v8_enable_pointer_compression = false  ## 关闭指针压缩
