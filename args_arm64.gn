@@ -7,7 +7,14 @@ use_custom_libcxx = false       # 使用系统提供的 libc++ 库，而非 V8 �
 v8_monolithic = true            # 生成单一文件
 v8_use_external_startup_data = false  
 symbol_level = 0
+strip_debug_info = true
 is_debug = false
 v8_android_log_stdout = true    # 将V8 的标准输出重定向到 Android 的日志系统（logcat）
 v8_enable_tests = false         # 不构建 V8 的测试套件，减少构建时间和产物体积
-v8_enable_pointer_compression = false  ## 关闭指针压缩
+v8_use_snapshot = false               # 如无快照需求可关闭 
+v8_static_library = true              # 生成静态库，便于剥离未使用符号 
+v8_enable_disassembler = false        # 关闭反汇编支持 :contentReference[oaicite:3]{index=3}
+v8_enable_gdbjit = false              # 关闭 GDB JIT 支持 :contentReference[oaicite:4]{index=4}
+v8_enable_slow_dchecks = false        # 关闭慢速校验 :contentReference[oaicite:5]{index=5}
+v8_enable_debugger = false            # 关闭调试
+v8_enable_webassembly = false         # 关闭wasm的支持
