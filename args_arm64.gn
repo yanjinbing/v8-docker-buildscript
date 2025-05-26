@@ -16,6 +16,7 @@ v8_static_library = true              # 生成静态库，便于剥离未使用�
 v8_enable_disassembler = false        # 关闭反汇编支持 :contentReference[oaicite:3]{index=3}
 v8_enable_gdbjit = false              # 关闭 GDB JIT 支持 :contentReference[oaicite:4]{index=4}
 v8_enable_slow_dchecks = false        # 关闭慢速校验 :contentReference[oaicite:5]{index=5}
-v8_enable_debugger = false            # 关闭调试
+v8_enable_debugger = true            # 启动调试
 v8_enable_webassembly = false         # 关闭wasm的支持
 v8_enable_pointer_compression = false  ## 关闭指针压缩
+v8_enable_inspector = true

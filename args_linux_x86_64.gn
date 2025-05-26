@@ -2,19 +2,23 @@ target_os = "linux"
 target_cpu = "x64"
 v8_target_cpu = "x64"
 v8_enable_i18n_support= false   # 禁用国际化支持，移除对 ICU 库的依赖，减小体积，但会导致 Intl 对象不可用
-is_component_build = false      # 构建为单一静态库
+is_component_build = false      # 构建多动态库
 use_custom_libcxx = false       # 使用系统提供的 libc++ 库，而非 V8 自带的版本
 v8_monolithic = true            # 生成单一文件
 v8_use_external_startup_data = false  
-symbol_level = 2
+symbol_level = 0
 strip_debug_info = false
-is_debug = true
+is_debug = false
 v8_enable_tests = false         # 不构建 V8 的测试套件，减少构建时间和产物体积
 v8_use_snapshot = false               # 如无快照需求可关闭 
 v8_static_library = true              # 生成静态库，便于剥离未使用符号 
-v8_enable_disassembler = true        # 关闭反汇编支持 :contentReference[oaicite:3]{index=3}
-v8_enable_gdbjit = true              # 关闭 GDB JIT 支持 :contentReference[oaicite:4]{index=4}
-v8_enable_slow_dchecks = true        # 关闭慢速校验 :contentReference[oaicite:5]{index=5}
+v8_enable_disassembler = false        # 开启反汇编支持 :contentReference[oaicite:3]{index=3}
+v8_enable_gdbjit = false              # 开启 GDB JIT 支持 :contentReference[oaicite:4]{index=4}
+v8_enable_slow_dchecks = false        # 开启慢速校验 :contentReference[oaicite:5]{index=5}
 v8_enable_debugger = true             # 关闭调试
 v8_enable_webassembly = false         # 关闭wasm的支持
 v8_enable_pointer_compression = false  ## 关闭指针压缩
+extra_cxxflags = [ "-std=c++20" , "-Wno-uninitialized" ]
+is_clang = false  # 如果您使用的是 GCC
+treat_warnings_as_errors = false
+v8_enable_inspector = true
